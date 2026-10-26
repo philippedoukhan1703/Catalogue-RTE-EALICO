@@ -72,7 +72,7 @@ export const EquipmentCard: React.FC<EquipmentCardProps> = ({
 
           <h3
             onClick={() => onSelect(equipment)}
-            className="text-base font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition-colors line-clamp-1 mb-2"
+            className="text-base font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition-colors mb-2 leading-snug"
           >
             {equipment["Désignation Modèle"]}
           </h3>

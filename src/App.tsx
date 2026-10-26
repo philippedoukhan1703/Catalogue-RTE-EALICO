@@ -11,6 +11,7 @@ import { EquipmentDetailModal } from './components/EquipmentDetailModal';
 import { EquipmentFormModal } from './components/EquipmentFormModal';
 import { StatsView } from './components/StatsView';
 import { QRCodeZoomModal } from './components/QRCodeZoomModal';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
 
 export default function App() {
   // Load initial state from localStorage or fallback to initialEquipmentData
@@ -18,7 +19,10 @@ export default function App() {
     try {
       const saved = localStorage.getItem('rte_equipment_catalog');
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (parsed && parsed.length > 10) {
+          return parsed;
+        }
       }
     } catch (e) {
       console.error("Failed to load from localStorage", e);
@@ -275,8 +279,9 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-12">
-        <p>© 2026 RTE - Réseau de Transport d'Électricité. Application de Gestion du Catalogue des Modèles d'Équipements.</p>
+      <footer className="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-12 space-y-1">
+        <p>Réseau de Transport d'Électricité. Application de Gestion du Catalogue des Modèles d'Équipements.</p>
+        <p className="font-medium text-slate-700">Copyright © Philippe DOUKHAN — 06 51 64 67 42</p>
       </footer>
 
       {/* Detail Modal */}
@@ -306,6 +311,9 @@ export default function App() {
         equipment={qrModalEquipment}
         onClose={() => setQrModalEquipment(null)}
       />
+
+      {/* Scroll to Top Button */}
+      <ScrollToTopButton />
     </div>
   );
 }

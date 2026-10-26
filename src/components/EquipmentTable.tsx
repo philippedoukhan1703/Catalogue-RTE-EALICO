@@ -62,10 +62,10 @@ export const EquipmentTable: React.FC<EquipmentTableProps> = ({
                       {eq["Code modèle"]}
                     </span>
                   </td>
-                  <td className="py-3 px-4 font-semibold text-slate-900 max-w-xs truncate">
+                  <td className="py-3 px-4 font-semibold text-slate-900">
                     <button
                       onClick={() => onSelect(eq)}
-                      className="hover:text-blue-600 text-left transition-colors truncate block w-full"
+                      className="hover:text-blue-600 text-left transition-colors block w-full leading-snug"
                     >
                       {eq["Désignation Modèle"]}
                     </button>
