@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue RTE - Gestion des Équipements</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>Catalogue RTE <small>Gestion des Équipements</small></h1>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Rechercher par code, désignation, thématique...">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </header>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label for="thematique-filter">Thématique Ealico</label>
+                <select id="thematique-filter">
+                    <option value="">Toutes</option>
+                    <!-- Options générées dynamiquement -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="type-filter">Type Ealico</label>
+                <select id="type-filter">
+                    <option value="">Tous</option>
+                    <!-- Options générées dynamiquement -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="equipe-filter">Équipe concernée</label>
+                <select id="equipe-filter">
+                    <option value="">Toutes</option>
+                    <option value="EEL">EEL</option>
+                    <option value="EMSP">EMSP</option>
+                    <option value="TST">TST</option>
+                    <option value="ASI">ASI</option>
+                    <option value="GDP">GDP</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="obligatoire-filter">Obligatoire Ealico</label>
+                <select id="obligatoire-filter">
+                    <option value="">Tous</option>
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="results">
+            <div class="results-count" id="results-count">0 équipement(s) trouvé(s)</div>
+            <div class="equipment-list" id="equipment-list">
+                <!-- Liste des équipements générée dynamiquement -->
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

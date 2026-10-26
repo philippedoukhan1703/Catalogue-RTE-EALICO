@@ -1,0 +1,6 @@
+{
+  "summary":  "Plan to add direct Excel (.xlsx) file import capability to the RTE Equipment Catalog application using SheetJS (xlsx) library, allowing users to load and parse their complete RTE catalog spreadsheets directly in the browser.",
+  "updatedAt":  "2026-10-26T09:56:01.426788924Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

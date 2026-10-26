@@ -1,0 +1,6 @@
+{
+  "name": "Catalogue RTE - Gestion des Équipements",
+  "description": "Application professionnelle de gestion et consultation du catalogue des modèles d'équipements RTE (Règlementation Ealico, contrôles, équipes, fiches techniques).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
