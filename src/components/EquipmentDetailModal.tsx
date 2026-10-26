@@ -8,6 +8,7 @@ interface EquipmentDetailModalProps {
   onClose: () => void;
   onEdit: (equipment: Equipment) => void;
   onOpenQRCode: (equipment: Equipment) => void;
+  onOpenPhoto: (photoUrl: string, title: string, code: string) => void;
 }
 
 export const EquipmentDetailModal: React.FC<EquipmentDetailModalProps> = ({
@@ -15,6 +16,7 @@ export const EquipmentDetailModal: React.FC<EquipmentDetailModalProps> = ({
   onClose,
   onEdit,
   onOpenQRCode,
+  onOpenPhoto,
 }) => {
   if (!equipment) return null;
 
@@ -59,11 +61,15 @@ export const EquipmentDetailModal: React.FC<EquipmentDetailModalProps> = ({
           {/* Photo & QR Code banner */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {equipment["Lien photo"] ? (
-              <div className="md:col-span-2 relative h-56 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+              <div
+                onClick={() => onOpenPhoto(equipment["Lien photo"], equipment["Désignation Modèle"], equipment["Code modèle"])}
+                className="md:col-span-2 relative h-56 rounded-xl overflow-hidden bg-slate-900/5 border border-slate-200 flex items-center justify-center cursor-zoom-in group/img p-2"
+                title="Cliquer pour zoomer la photo"
+              >
                 <img
                   src={equipment["Lien photo"]}
                   alt={equipment["Désignation Modèle"]}
-                  className="w-full h-full object-cover"
+                  className="max-h-full max-w-full object-contain group-hover/img:scale-105 transition-transform"
                   referrerPolicy="no-referrer"
                 />
               </div>

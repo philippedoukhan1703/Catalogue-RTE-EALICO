@@ -1,6 +1,6 @@
 import React from 'react';
 import { Equipment } from '../types';
-import { Wrench, ShieldAlert, ShieldCheck, FileText, Edit2, Trash2, Eye, Layers, QrCode } from 'lucide-react';
+import { Wrench, ShieldAlert, ShieldCheck, FileText, Edit2, Trash2, Eye, Layers, QrCode, Image as ImageIcon } from 'lucide-react';
 
 interface EquipmentCardProps {
   equipment: Equipment;
@@ -8,6 +8,7 @@ interface EquipmentCardProps {
   onEdit: (equipment: Equipment) => void;
   onDelete: (id: string) => void;
   onOpenQRCode: (equipment: Equipment) => void;
+  onOpenPhoto: (photoUrl: string, title: string, code: string) => void;
 }
 
 export const EquipmentCard: React.FC<EquipmentCardProps> = ({
@@ -16,25 +17,37 @@ export const EquipmentCard: React.FC<EquipmentCardProps> = ({
   onEdit,
   onDelete,
   onOpenQRCode,
+  onOpenPhoto,
 }) => {
   const isMandatory = equipment["Obligatoire Ealico"] !== "N";
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden group">
-      {/* Top Media / Thumbnail Area */}
-      <div className="relative h-44 bg-slate-100 overflow-hidden">
+      {/* Top Media / Thumbnail Area (Entire & Zoomable) */}
+      <div className="relative h-48 bg-slate-900/5 overflow-hidden flex items-center justify-center p-2 border-b border-slate-100">
         {equipment["Lien photo"] ? (
-          <img
-            src={equipment["Lien photo"]}
-            alt={equipment["Désignation Modèle"]}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            referrerPolicy="no-referrer"
-          />
+          <div
+            onClick={() => onOpenPhoto(equipment["Lien photo"], equipment["Désignation Modèle"], equipment["Code modèle"])}
+            className="w-full h-full flex items-center justify-center cursor-zoom-in group/img"
+            title="Cliquer pour zoomer la photo"
+          >
+            <img
+              src={equipment["Lien photo"]}
+              alt={equipment["Désignation Modèle"]}
+              className="max-h-full max-w-full object-contain group-hover/img:scale-105 transition-transform duration-300 rounded"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-semibold gap-1">
+              <ImageIcon className="w-4 h-4" />
+              <span>Zoomer</span>
+            </div>
+          </div>
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400">
+          <div className="w-full h-full flex items-center justify-center text-slate-400">
             <Layers className="w-12 h-12 stroke-1" />
           </div>
         )}
+
         <div
           onClick={(e) => {
             e.stopPropagation();
@@ -42,10 +55,11 @@ export const EquipmentCard: React.FC<EquipmentCardProps> = ({
             alert(`Code ${equipment["Code modèle"]} copié dans le presse-papier !`);
           }}
           title="Cliquer pour copier le code"
-          className="absolute top-3 right-3 flex items-center gap-1.5 bg-slate-900/90 backdrop-blur-xs text-white px-3 py-1.5 rounded-lg text-sm font-mono font-bold shadow-sm cursor-pointer hover:bg-blue-600 transition-colors"
+          className="absolute top-3 right-3 flex items-center gap-1.5 bg-slate-900/90 backdrop-blur-xs text-white px-3 py-1.5 rounded-lg text-sm font-mono font-bold shadow-sm cursor-pointer hover:bg-blue-600 transition-colors whitespace-nowrap"
         >
           {equipment["Code modèle"]}
         </div>
+
         <div className="absolute top-3 left-3">
           {isMandatory ? (
             <span className="flex items-center gap-1 bg-emerald-600/90 backdrop-blur-xs text-white px-2.5 py-1 rounded-md text-xs font-medium">

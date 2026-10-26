@@ -12,6 +12,7 @@ import { EquipmentFormModal } from './components/EquipmentFormModal';
 import { StatsView } from './components/StatsView';
 import { QRCodeZoomModal } from './components/QRCodeZoomModal';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { PhotoZoomModal } from './components/PhotoZoomModal';
 
 export default function App() {
   // Load initial state from localStorage or fallback to initialEquipmentData
@@ -39,7 +40,7 @@ export default function App() {
     }
   }, [equipmentList]);
 
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('table');
 
   const [filters, setFilters] = useState<FilterState>({
     search: '',
@@ -53,6 +54,7 @@ export default function App() {
   const [editingEquipment, setEditingEquipment] = useState<Equipment | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [qrModalEquipment, setQrModalEquipment] = useState<Equipment | null>(null);
+  const [activePhoto, setActivePhoto] = useState<{ url: string; title: string; code: string } | null>(null);
 
   // Filter logic
   const filteredEquipment = equipmentList.filter((eq) => {
@@ -253,6 +255,7 @@ export default function App() {
                     }}
                     onDelete={handleDeleteEquipment}
                     onOpenQRCode={(eq) => setQrModalEquipment(eq)}
+                    onOpenPhoto={(url, title, code) => setActivePhoto({ url, title, code })}
                   />
                 ))}
               </div>
@@ -266,6 +269,7 @@ export default function App() {
                 }}
                 onDelete={handleDeleteEquipment}
                 onOpenQRCode={(eq) => setQrModalEquipment(eq)}
+                onOpenPhoto={(url, title, code) => setActivePhoto({ url, title, code })}
               />
             )}
 
@@ -293,6 +297,7 @@ export default function App() {
           setIsFormOpen(true);
         }}
         onOpenQRCode={(eq) => setQrModalEquipment(eq)}
+        onOpenPhoto={(url, title, code) => setActivePhoto({ url, title, code })}
       />
 
       {/* Add / Edit Form Modal */}
@@ -310,6 +315,14 @@ export default function App() {
       <QRCodeZoomModal
         equipment={qrModalEquipment}
         onClose={() => setQrModalEquipment(null)}
+      />
+
+      {/* Photo Zoom Modal */}
+      <PhotoZoomModal
+        photoUrl={activePhoto?.url || null}
+        title={activePhoto?.title || ''}
+        code={activePhoto?.code || ''}
+        onClose={() => setActivePhoto(null)}
       />
 
       {/* Scroll to Top Button */}

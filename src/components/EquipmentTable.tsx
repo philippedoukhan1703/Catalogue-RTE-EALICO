@@ -1,6 +1,6 @@
 import React from 'react';
 import { Equipment } from '../types';
-import { Eye, Edit2, Trash2, ShieldCheck, QrCode } from 'lucide-react';
+import { Eye, Edit2, Trash2, ShieldCheck, QrCode, Image as ImageIcon } from 'lucide-react';
 
 interface EquipmentTableProps {
   equipmentList: Equipment[];
@@ -8,6 +8,7 @@ interface EquipmentTableProps {
   onEdit: (equipment: Equipment) => void;
   onDelete: (id: string) => void;
   onOpenQRCode: (equipment: Equipment) => void;
+  onOpenPhoto: (photoUrl: string, title: string, code: string) => void;
 }
 
 export const EquipmentTable: React.FC<EquipmentTableProps> = ({
@@ -16,6 +17,7 @@ export const EquipmentTable: React.FC<EquipmentTableProps> = ({
   onEdit,
   onDelete,
   onOpenQRCode,
+  onOpenPhoto,
 }) => {
   if (equipmentList.length === 0) {
     return (
@@ -31,6 +33,7 @@ export const EquipmentTable: React.FC<EquipmentTableProps> = ({
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+              <th className="py-3 px-4 w-16 text-center">Photo</th>
               <th className="py-3 px-4">Code Modèle</th>
               <th className="py-3 px-4">Désignation</th>
               <th className="py-3 px-4">Thématique</th>
@@ -50,18 +53,39 @@ export const EquipmentTable: React.FC<EquipmentTableProps> = ({
                   key={eq.id}
                   className="hover:bg-slate-50/80 transition-colors group"
                 >
-                  <td className="py-3 px-4 font-mono font-bold text-base text-blue-900">
+                  {/* Photo Column */}
+                  <td className="py-2 px-4 text-center">
+                    {eq["Lien photo"] ? (
+                      <div
+                        onClick={() => onOpenPhoto(eq["Lien photo"], eq["Désignation Modèle"], eq["Code modèle"])}
+                        className="w-10 h-10 mx-auto bg-slate-100 rounded border border-slate-200 flex items-center justify-center cursor-zoom-in overflow-hidden group/thumb"
+                        title="Cliquer pour zoomer la photo"
+                      >
+                        <img
+                          src={eq["Lien photo"]}
+                          alt={eq["Désignation Modèle"]}
+                          className="w-full h-full object-contain group-hover/thumb:scale-110 transition-transform"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                    ) : (
+                      <span className="text-slate-300 text-xs">-</span>
+                    )}
+                  </td>
+
+                  <td className="py-3 px-4 font-mono font-bold text-base text-blue-900 whitespace-nowrap">
                     <span
                       onClick={() => {
                         navigator.clipboard.writeText(eq["Code modèle"]);
                         alert(`Code ${eq["Code modèle"]} copié dans le presse-papier !`);
                       }}
                       title="Cliquer pour copier le code"
-                      className="cursor-pointer hover:text-blue-600 transition-colors inline-block"
+                      className="cursor-pointer hover:text-blue-600 transition-colors inline-block whitespace-nowrap"
                     >
                       {eq["Code modèle"]}
                     </span>
                   </td>
+
                   <td className="py-3 px-4 font-semibold text-slate-900">
                     <button
                       onClick={() => onSelect(eq)}
@@ -70,18 +94,23 @@ export const EquipmentTable: React.FC<EquipmentTableProps> = ({
                       {eq["Désignation Modèle"]}
                     </button>
                   </td>
+
                   <td className="py-3 px-4 text-slate-600 text-xs">
                     {eq["Classification Ealico"]}
                   </td>
+
                   <td className="py-3 px-4 text-slate-600 text-xs">
                     {eq["Type Ealico"]}
                   </td>
-                  <td className="py-3 px-4 text-xs font-medium text-slate-800">
+
+                  <td className="py-3 px-4 text-xs font-medium text-slate-800 whitespace-nowrap">
                     {eq["Equipes concernées"]?.join(', ') || '-'}
                   </td>
+
                   <td className="py-3 px-4 text-center font-mono tabular-nums">
                     {eq["Nb éléments"]}
                   </td>
+
                   <td className="py-3 px-4 text-center">
                     {isMandatory ? (
                       <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
@@ -91,10 +120,12 @@ export const EquipmentTable: React.FC<EquipmentTableProps> = ({
                       <span className="text-xs text-slate-400">Non</span>
                     )}
                   </td>
+
                   <td className="py-3 px-4 text-center font-mono tabular-nums text-blue-600 font-medium">
                     {eq.Contrôles?.length || 0}
                   </td>
-                  <td className="py-3 px-4 text-right space-x-1">
+
+                  <td className="py-3 px-4 text-right space-x-1 whitespace-nowrap">
                     <button
                       onClick={() => onSelect(eq)}
                       title="Voir les détails"

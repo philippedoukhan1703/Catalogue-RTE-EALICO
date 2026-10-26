@@ -69,7 +69,7 @@ export const QRCodeZoomModal: React.FC<QRCodeZoomModalProps> = ({ equipment, onC
             alert(`Code ${equipment["Code modèle"]} copié dans le presse-papier !`);
           }}
           title="Cliquer pour copier le code"
-          className="text-xl font-bold font-mono text-blue-900 mb-6 bg-blue-50 hover:bg-blue-100 px-4 py-1.5 rounded-xl border border-blue-200 cursor-pointer transition-colors shadow-2xs"
+          className="text-xl font-bold font-mono text-blue-900 mb-6 bg-blue-50 hover:bg-blue-100 px-4 py-1.5 rounded-xl border border-blue-200 cursor-pointer transition-colors shadow-2xs whitespace-nowrap inline-block"
         >
           {equipment["Code modèle"]}
           <span className="block text-[10px] font-sans font-normal text-slate-500">Cliquer pour copier</span>
